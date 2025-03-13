@@ -1,17 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { MessengerService } from './messenger.service';
 import { CreateMessengerDto } from './dto/create-messenger.dto';
 import { UpdateMessengerDto } from './dto/update-messenger.dto';
-import  {Twilio } from 'twilio';
+import { Twilio } from 'twilio';
 @Controller('messenger')
 export class MessengerController {
-  constructor(private readonly messengerService: MessengerService,private twilio:Twilio){}
+  constructor(
+    private readonly messengerService: MessengerService,
+    private twilio: Twilio,
+  ) {}
 
-  @Post("/twilio")
+  @Post('/twilio')
   create(@Body() createMessengerDto: CreateMessengerDto) {
-
     return this.messengerService.create(createMessengerDto);
-    
   }
 
   @Get()
@@ -25,7 +34,10 @@ export class MessengerController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMessengerDto: UpdateMessengerDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateMessengerDto: UpdateMessengerDto,
+  ) {
     return this.messengerService.update(+id, updateMessengerDto);
   }
 
