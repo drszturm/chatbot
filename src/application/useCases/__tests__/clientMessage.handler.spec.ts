@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import ClientMessageHandler from './clientMessage.handler';
-import ClientMessageValidator from './clientMessage.validator';
-import { whatsappApiMock } from '../../commom/mocks/whatsappApi.mock';
-import { messagesRepositoryMock } from '../../commom/mocks/messageRepository.mock';
-import { messageServiceMock } from '../../commom/mocks/messageService.mock';
+import ClientMessageHandler from '../ClientMessage/clientMessage.handler';
+import ClientMessageValidator from '../ClientMessage/clientMessage.validator';
+import { messagesRepositoryMock } from './mocks/messageRepository.mock';
+import { messageServiceMock } from './mocks/messageService.mock';
+import { whatsappApiMock } from './mocks/whatsappApi.mock';
 
 
 describe('ClientMessageHandler', () => {

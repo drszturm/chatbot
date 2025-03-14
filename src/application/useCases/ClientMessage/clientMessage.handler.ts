@@ -1,6 +1,6 @@
-import IWhatsappApiService from '@core/interfaces/services/IWhatsappApiService';
+import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
 import IMessageHandler from '../../interfaces/handlers/IMessageHandler';
-import IMessageService from '@core/interfaces/services/IMessageService';
+import IMessageService from '@application/interfaces/services/IMessageService';
 import ClientMessageValidator from './clientMessage.validator';
 
 export default class ClientMessageHandler implements IMessageHandler {

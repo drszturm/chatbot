@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import IWhatsappApiService from '../interfaces/services/IWhatsappApiService';
 import IMessageService from '../interfaces/services/IMessageService';
-import AttendeeMessageHandler from './AttendeeMessage/attendeeMessage.handler';
-import ClientMessageHandler from './ClientMessage/clientMessage.handler';
-import { Sender } from '@core/enums/sender.enum';
-import IMessageHandlerFactory from '@core/interfaces/factories/IMessageHandlerFactory';
-import IMessageHandler from '@core/interfaces/handlers/IMessageHandler';
+import { Sender } from 'domain/enums/sender.enum';
+import IMessageHandlerFactory from '@application/interfaces/factories/IMessageHandlerFactory';
+import IMessageHandler from '@application/interfaces/handlers/IMessageHandler';
+import ClientMessageHandler from '@application/useCases/ClientMessage/clientMessage.handler';
+import AttendeeMessageHandler from '@application/useCases/AttendeeMessage/attendeeMessage.handler';
 
 Injectable();
 export default class MessageHandlerFactory implements IMessageHandlerFactory {

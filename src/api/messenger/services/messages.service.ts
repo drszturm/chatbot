@@ -1,6 +1,6 @@
-import IMessageService from '@core/interfaces/services/IMessageService';
-import IWhatsappApiService from '@core/interfaces/services/IWhatsappApiService';
-import MessagesRepository from '../repositories/messages.repository';
+import IMessageService from '@application/interfaces/services/IMessageService';
+import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
+import MessagesRepository from '../../../infra/persistence/messages.repository';
 
 export default class MessageService implements IMessageService {
   private MAIN_NUMBER: string = process.env.BOT_NUMBER;

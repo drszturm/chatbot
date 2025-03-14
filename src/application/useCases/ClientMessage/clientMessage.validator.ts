@@ -1,4 +1,4 @@
-import Validator from '../../commom/validator';
+import Validator from '../../../common/validator';
 
 export default class ClientMessageValidator extends Validator {
   constructor(private readonly message: ReceivedMessage) {
