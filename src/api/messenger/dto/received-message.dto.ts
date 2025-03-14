@@ -1,5 +1,5 @@
 type ReceivedMessageDto = {
     phone: string;
-    message: string;
+    text: string;
     groupId?: string;
 }

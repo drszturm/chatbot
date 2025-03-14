@@ -4,4 +4,6 @@ export default interface IMessageService {
     message: ReceivedMessageDto,
     attendance: Attendance,
   ): Promise<Group>;
+
+  getClientNumberFromGroupName(name): string;
 }

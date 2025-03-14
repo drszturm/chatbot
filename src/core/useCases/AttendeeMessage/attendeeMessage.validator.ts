@@ -1,4 +1,4 @@
-import Validator from 'src/core/config/validator';
+import Validator from "../../commom/validator";
 
 export default class AttendeeMessageValidator extends Validator {
   constructor(private readonly message: ReceivedMessage) {
@@ -14,7 +14,7 @@ export default class AttendeeMessageValidator extends Validator {
     if (this.message.groupId == null || this.message.groupId === '')
       this.errors.push('GroupId cannot be empty');
 
-    if (this.message.message === null || this.message.message === '')
+    if (this.message.text === null || this.message.text === '')
       this.errors.push('Message cannot be empty');
 
     if (this.message.phone === null || this.message.phone === '')

@@ -1,5 +1,6 @@
 type ReceivedMessage = {
     groupId?: string;
-    message: string;
+    externalId?: string;
+    text: string;
     phone: string;
 }

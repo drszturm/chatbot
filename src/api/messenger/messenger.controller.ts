@@ -15,7 +15,7 @@ import { Twilio } from 'twilio';
 export class MessengerController {
   constructor(
     private readonly messengerService: MessengerService,
-    private twilio: Twilio,
+    // private twilio: Twilio,
   ) {}
 
   @Post('/twilio')

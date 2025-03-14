@@ -1,4 +1,4 @@
-import Validator from 'src/core/config/validator';
+import Validator from '../../commom/validator';
 
 export default class ClientMessageValidator extends Validator {
   constructor(private readonly message: ReceivedMessage) {
@@ -11,7 +11,7 @@ export default class ClientMessageValidator extends Validator {
       return;
     }
 
-    if (this.message.message === null || this.message.message === '')
+    if (this.message.text === null || this.message.text === '')
       this.errors.push('Message cannot be null');
 
     if (this.message.phone === null || this.message.phone === '')

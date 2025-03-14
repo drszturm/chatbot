@@ -1,6 +1,6 @@
-import IWhatsappApiService from 'src/core/interfaces/services/IWhatsappApiService';
-import IMessageHandler from '../../interfaces/IMessageHandler';
-import IMessageService from 'src/core/interfaces/services/IMessageService';
+import IWhatsappApiService from '@core/interfaces/services/IWhatsappApiService';
+import IMessageHandler from '../../interfaces/handlers/IMessageHandler';
+import IMessageService from '@core/interfaces/services/IMessageService';
 import ClientMessageValidator from './clientMessage.validator';
 
 export default class ClientMessageHandler implements IMessageHandler {
@@ -21,7 +21,7 @@ export default class ClientMessageHandler implements IMessageHandler {
 
     if (group) {
       // se existe, encaminha a mensagem no grupo
-      this.whatsappApi.forwardMessageToGroup(group, message.message);
+      this.whatsappApi.forwardMessageToGroup(group, message.text);
       return;
     }
 
@@ -37,7 +37,7 @@ export default class ClientMessageHandler implements IMessageHandler {
       group = await this.messageService.createGroup(message, attendee);
 
       // Encaminha a mensgem no grupo
-      this.whatsappApi.forwardMessageToGroup(group, message.message);
+      this.whatsappApi.forwardMessageToGroup(group, message.text);
       return;
     }
 
@@ -48,6 +48,6 @@ export default class ClientMessageHandler implements IMessageHandler {
     group = await this.messageService.createGroup(message, attendee);
 
     // Encaminha a mensgem no grupo
-    this.whatsappApi.forwardMessageToGroup(group, message.message);
+    this.whatsappApi.forwardMessageToGroup(group, message.text);
   }
 }

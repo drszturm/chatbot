@@ -1,4 +1,5 @@
 interface IMessagesRepository {
+  findAtteendeeByPhone(phone: string): Promise<Attendance>;
   findAttendeeByClientPhoneNumber(number: string): Promise<Attendance>;
   findGroupByClientPhone(phone: string): Promise<Group>;
   findGroupById(groupId: string): Promise<Group>;
