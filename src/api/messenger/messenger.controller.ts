@@ -10,15 +10,19 @@ import {
 import { MessengerService } from './messenger.service';
 import { CreateMessengerDto } from './dto/create-messenger.dto';
 import { UpdateMessengerDto } from './dto/update-messenger.dto';
-import { Twilio } from 'twilio';
+
 @Controller('messenger')
 export class MessengerController {
   constructor(
-    private readonly messengerService: MessengerService,
-    // private twilio: Twilio,
+    private readonly messengerService: MessengerService
   ) {}
 
-  @Post('/twilio')
+  @Post('/webhook')
+  receiveMessage(@Body() message: ReceivedMessageDto) {
+    return this.messengerService.create(message);
+  }
+
+  @Post('')
   create(@Body() createMessengerDto: CreateMessengerDto) {
     return this.messengerService.create(createMessengerDto);
   }

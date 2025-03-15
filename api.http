@@ -2,3 +2,8 @@
 //https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
 Get http://localhost:3000/messenger/twillio
+{
+    "phone": "11958610424",
+    "text": "Olá ",
+//    "groupId": "string;"
+}

@@ -1,3 +1,5 @@
+import { Group } from "@domain/entities/group.entity";
+
 export default interface IMessageService {
   findNextAttendance(): Attendance | PromiseLike<Attendance>;
   createGroup(

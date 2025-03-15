@@ -1,9 +1,11 @@
 import IMessageService from '@application/interfaces/services/IMessageService';
 import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
-import MessagesRepository from '../../../infra/persistence/messages.repository';
+import MessagesRepository from '../../../infra/persistence/repositories/messages.repository';
+import MessageHandlerFactory from '@application/factories/MessageHandlerFactory';
+import { Group } from '@domain/entities/group.entity';
 
 export default class MessageService implements IMessageService {
-  private MAIN_NUMBER: string = process.env.BOT_NUMBER;
+  private MAIN_NUMBER: string = process.env.BOT_PHONE;
 
   constructor(
     private readonly messagesRepository: MessagesRepository,
@@ -21,14 +23,16 @@ export default class MessageService implements IMessageService {
     attendance: Attendance,
   ): Promise<Group> {
     let name = `${attendance.Id}#XXX - ${message.phone}`;
-    let members = [attendance.phone, this.MAIN_NUMBER];
-    let newGroup = { name, members } as Group;
+    let newGroup = {
+      name,
+      attendeePhone: attendance.phone,
+      botPhone: this.MAIN_NUMBER,
+      clientPhone: message.phone,
+    } as Group;
     this.whatsappApi.createGroup(newGroup);
 
     // salva no banco
-    newGroup.groupId = (
-      await this.messagesRepository.addGroup(newGroup)
-    ).groupId;
+    await this.messagesRepository.addGroup(newGroup);
     return newGroup;
   }
 

@@ -1,3 +1,5 @@
+import { IMessagesRepository } from '@application/interfaces/repositories/IMessageRepository';
+import { Group } from '@domain/entities/group.entity';
 import { Injectable, Scope } from '@nestjs/common';
 
 // TODO: Implementar repository 

@@ -1,24 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import AttendeeMessageHandler from '../AttendeeMessage/attendeeMessage.handler';
+import AttendeeMessageUseCase from '../AttendeeMessage/attendeeMessage.useCase';
 import AttendeeMessageValidator from '../AttendeeMessage/attendeeMessage.validator';
 import { messagesRepositoryMock } from './mocks/messageRepository.mock';
 import { messageServiceMock } from './mocks/messageService.mock';
 import { whatsappApiMock } from './mocks/whatsappApi.mock';
 
-describe('AttendeeMessageHandler', () => {
-  let handler: AttendeeMessageHandler;
+describe('AttendeeMessageUseCase', () => {
+  let handler: AttendeeMessageUseCase;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        AttendeeMessageHandler,
+        AttendeeMessageUseCase,
         { provide: 'IMessagesRepository', useValue: messagesRepositoryMock },
         { provide: 'IWhatsappApiService', useValue: whatsappApiMock },
         { provide: 'IMessageService', useValue: messageServiceMock },
       ],
     }).compile();
 
-    handler = new AttendeeMessageHandler(messagesRepositoryMock, whatsappApiMock, messageServiceMock);
+    handler = new AttendeeMessageUseCase(messagesRepositoryMock, whatsappApiMock, messageServiceMock);
   });
 
   it('should throw an error if the message is invalid', async () => {
@@ -26,7 +26,7 @@ describe('AttendeeMessageHandler', () => {
     jest.spyOn(AttendeeMessageValidator.prototype, 'isValid').mockReturnValue(false);
     jest.spyOn(AttendeeMessageValidator.prototype, 'getErrors').mockReturnValue(['Invalid message']);
 
-    await expect(handler.handle(invalidMessage as any)).rejects.toThrow('Invalid message');
+    await expect(handler.execute(invalidMessage as any)).rejects.toThrow('Invalid message');
   });
 
   it('should throw an error if group does not exist and externalId is invalid', async () => {
@@ -35,7 +35,7 @@ describe('AttendeeMessageHandler', () => {
     jest.spyOn(messagesRepositoryMock, 'findGroupById').mockResolvedValue(null);
     jest.spyOn(whatsappApiMock, 'getGroupById').mockReturnValue(null);
 
-    await expect(handler.handle(message as ReceivedMessage)).rejects.toThrow('Não existe grupo');
+    await expect(handler.execute(message as ReceivedMessage)).rejects.toThrow('Não existe grupo');
   });
 
   it('should create a group and forward the message if group does not exist but externalId is valid', async () => {
@@ -52,7 +52,7 @@ describe('AttendeeMessageHandler', () => {
     jest.spyOn(whatsappApiMock, 'forwardMessageToGroup').mockResolvedValue(undefined);
     jest.spyOn(whatsappApiMock, 'forwardMessageToClient').mockResolvedValue(undefined);
 
-    await handler.handle(message as any);
+    await handler.execute(message as any);
 
     expect(messageServiceMock.createGroup).toHaveBeenCalledWith(message, attendee);
     expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, "*Attendee Name*: Hello");
@@ -70,7 +70,7 @@ describe('AttendeeMessageHandler', () => {
     jest.spyOn(messagesRepositoryMock, 'findAtteendeeByPhone').mockResolvedValue(attendee);
     jest.spyOn(whatsappApiMock, 'forwardMessageToClient').mockResolvedValue(undefined);
 
-    await handler.handle(message as any);
+    await handler.execute(message as any);
 
     expect(whatsappApiMock.forwardMessageToClient).toHaveBeenCalledWith(client, {
       ...message,

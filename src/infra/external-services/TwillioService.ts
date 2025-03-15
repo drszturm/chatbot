@@ -1,6 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import twilio from 'twilio';
 
 // TODO: Ajustar para acessar dados do grupo e afins 
+@Injectable()
 export class TwillioService {
     private client: twilio.Twilio;
     private fromNumber: string;

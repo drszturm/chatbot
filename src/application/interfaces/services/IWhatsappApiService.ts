@@ -1,3 +1,5 @@
+import { Group } from "@domain/entities/group.entity";
+
 export default interface IWhatsappApiService {
     forwardMessageToClient(client: Client, message: ReceivedMessage): void;
     forwardMessageToGroup(group: Group, message: string): void;

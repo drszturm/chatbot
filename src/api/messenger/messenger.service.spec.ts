@@ -1,15 +1,18 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { MessengerService } from './messenger.service';
 
 describe('MessengerService', () => {
   let service: MessengerService;
-
+  const messageHandlerMock = {
+    execute: jest.fn(),
+  };
+  
+  const messageHandlerFactoryMock = {
+    create: jest.fn().mockReturnValue(messageHandlerMock),
+  };
+  
+  
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [MessengerService],
-    }).compile();
-
-    service = module.get<MessengerService>(MessengerService);
+    service = new MessengerService(messageHandlerFactoryMock);
   });
 
   it('should be defined', () => {

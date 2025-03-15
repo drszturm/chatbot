@@ -1,5 +1,6 @@
-import { Logger as NestLogger } from '@nestjs/common';
+import { Injectable, Logger as NestLogger } from '@nestjs/common';
 
+@Injectable()
 export class Logger {
   private static readonly logger = new NestLogger('Application'); // Define um contexto padrão
 

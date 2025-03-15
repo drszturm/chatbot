@@ -1,25 +1,25 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import ClientMessageHandler from '../ClientMessage/clientMessage.handler';
+import ClientMessageUseCase from '../ClientMessage/clientMessage.useCase';
 import ClientMessageValidator from '../ClientMessage/clientMessage.validator';
 import { messagesRepositoryMock } from './mocks/messageRepository.mock';
 import { messageServiceMock } from './mocks/messageService.mock';
 import { whatsappApiMock } from './mocks/whatsappApi.mock';
 
 
-describe('ClientMessageHandler', () => {
-  let handler: ClientMessageHandler;
+describe('ClientMessageUseCase', () => {
+  let handler: ClientMessageUseCase;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        ClientMessageHandler,
+        ClientMessageUseCase,
         { provide: 'IMessagesRepository', useValue: messagesRepositoryMock },
         { provide: 'IWhatsappApiService', useValue: whatsappApiMock },
         { provide: 'IMessageService', useValue: messageServiceMock },
       ],
     }).compile();
 
-    handler = new ClientMessageHandler(messagesRepositoryMock, whatsappApiMock, messageServiceMock);
+    handler = new ClientMessageUseCase(messagesRepositoryMock, whatsappApiMock, messageServiceMock);
 
   });
 
@@ -28,7 +28,7 @@ describe('ClientMessageHandler', () => {
     jest.spyOn(ClientMessageValidator.prototype, 'isValid').mockReturnValue(false);
     jest.spyOn(ClientMessageValidator.prototype, 'getErrors').mockReturnValue(['Invalid message']);
 
-    await expect(handler.handle(message)).rejects.toThrow('Invalid message');
+    await expect(handler.execute(message)).rejects.toThrow('Invalid message');
   });
 
   it('should forward the message to an existing group', async () => {
@@ -37,7 +37,7 @@ describe('ClientMessageHandler', () => {
     jest.spyOn(ClientMessageValidator.prototype, 'isValid').mockReturnValue(true);
     messagesRepositoryMock.findGroupByClientPhone.mockResolvedValue(group);
 
-    await handler.handle(message);
+    await handler.execute(message);
 
     expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message.text);
   });
@@ -51,7 +51,7 @@ describe('ClientMessageHandler', () => {
     messagesRepositoryMock.findAttendeeByClientPhoneNumber.mockResolvedValue(attendee);
     messageServiceMock.createGroup.mockResolvedValue(group);
 
-    await handler.handle(message);
+    await handler.execute(message);
 
     expect(messageServiceMock.createGroup).toHaveBeenCalledWith(message, attendee);
     expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message.text);
@@ -67,7 +67,7 @@ describe('ClientMessageHandler', () => {
     messageServiceMock.findNextAttendance.mockResolvedValue(attendee);
     messageServiceMock.createGroup.mockResolvedValue(group);
 
-    await handler.handle(message);
+    await handler.execute(message);
 
     expect(messageServiceMock.findNextAttendance).toHaveBeenCalled();
     expect(messageServiceMock.createGroup).toHaveBeenCalledWith(message, attendee);

@@ -11,8 +11,10 @@
     "outDir": "./dist",
     "baseUrl": "src",
     "paths": {
+      "@domain/*": ["domain/*"],
       "@application/*": ["application/*"],
-      "@common/*": ["core/*"],
+      "@common/*": ["common/*"],
+      "@infra/*": ["infra/*"],
       "@api/*": ["api/*"]
     },
     "incremental": true,
@@ -21,6 +23,7 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "resolveJsonModule": true
   }
 }

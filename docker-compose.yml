@@ -5,7 +5,7 @@ services:
     image: postgres
     restart: always
     environment:
-      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PASSWORD=admin
     container_name: postgres-chatbot-denarius
     volumes:
       - ./pgdata:/var/lib/postgresql/data

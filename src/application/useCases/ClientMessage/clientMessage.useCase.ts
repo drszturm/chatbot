@@ -1,16 +1,17 @@
 import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
-import IMessageHandler from '../../interfaces/handlers/IMessageHandler';
 import IMessageService from '@application/interfaces/services/IMessageService';
 import ClientMessageValidator from './clientMessage.validator';
+import { IClientMessageUseCase } from '@domain/interfaces/useCases/IClientMessage.useCase';
+import { IMessagesRepository } from '@application/interfaces/repositories/IMessageRepository';
 
-export default class ClientMessageHandler implements IMessageHandler {
+export default class ClientMessageUseCase implements IClientMessageUseCase {
   constructor(
     private readonly messagesRepository: IMessagesRepository,
     private readonly whatsappApi: IWhatsappApiService,
     private readonly messageService: IMessageService,
   ) {}
 
-  async handle(message: ReceivedMessage) {
+  async execute(message: ReceivedMessage) {
     const validator = new ClientMessageValidator(message);
     if (!validator.isValid()) throw new Error(validator.getErrors().join(';'));
 
