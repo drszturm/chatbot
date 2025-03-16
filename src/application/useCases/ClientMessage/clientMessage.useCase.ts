@@ -1,8 +1,8 @@
-import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
-import IMessageService from '@application/interfaces/services/IMessageService';
+import { IWhatsappApiService } from '@application/interfaces/services/IWhatsappApiService';
+import { IMessageService } from '@application/interfaces/services/IMessageService';
 import ClientMessageValidator from './clientMessage.validator';
 import { IClientMessageUseCase } from '@domain/interfaces/useCases/IClientMessage.useCase';
-import { IMessagesRepository } from '@application/interfaces/repositories/IMessageRepository';
+import { IMessagesRepository } from '@domain/interfaces/repositories/IMessagesRepository';
 
 export default class ClientMessageUseCase implements IClientMessageUseCase {
   constructor(

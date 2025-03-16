@@ -19,7 +19,7 @@ export class MessengerController {
 
   @Post('/webhook')
   receiveMessage(@Body() message: ReceivedMessageDto) {
-    return this.messengerService.create(message);
+    return this.messengerService.handleMessage(message);
   }
 
   @Post('')

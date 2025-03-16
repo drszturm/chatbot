@@ -1,8 +1,8 @@
-import IMessageService from '@application/interfaces/services/IMessageService';
-import AttendeeMessageValidator from './attendeeMessage.validator';
-import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
+import { IMessageService } from '@application/interfaces/services/IMessageService';
+import { IWhatsappApiService } from '@application/interfaces/services/IWhatsappApiService';
 import { IAttendeeMessageUseCase } from '@domain/interfaces/useCases/IAttendeeMessage.useCase';
-import { IMessagesRepository } from '@application/interfaces/repositories/IMessageRepository';
+import { IMessagesRepository } from '@domain/interfaces/repositories/IMessagesRepository';
+import AttendeeMessageValidator from './attendeeMessage.validator';
 
 export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
   constructor(
@@ -14,8 +14,7 @@ export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
   async execute(message: ReceivedMessage) {
     let validator = new AttendeeMessageValidator(message);
 
-    if (!validator.isValid()) 
-      throw new Error(validator.getErrors().join(';'));
+    if (!validator.isValid()) throw new Error(validator.getErrors().join(';'));
 
     let attendee = await this.messagesRepository.findAtteendeeByPhone(
       message.phone,
@@ -24,14 +23,15 @@ export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
     let group = await this.messagesRepository.findGroupById(message.groupId);
 
     if (!group) {
-      // busca grupo no wwp 
+      // busca grupo no wwp
       let group = this.whatsappApi.getGroupById(message.externalId);
 
       // groupId inválido
-      if(!group)
-        throw new Error('Não existe grupo')
-      
-      let clientPhone = this.messageService.getClientNumberFromGroupName(group.name); 
+      if (!group) throw new Error('Não existe grupo');
+
+      let clientPhone = this.messageService.getClientNumberFromGroupName(
+        group.name,
+      );
       let client = { phoneNumber: clientPhone } as Client;
 
       await this.messageService.createGroup(message, attendee);
@@ -40,11 +40,13 @@ export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
       message.text = `*${attendee.name}*: ${message.text}`;
       this.whatsappApi.forwardMessageToGroup(group, message.text);
       this.whatsappApi.forwardMessageToClient(client, message);
-      return
+      return;
     }
 
-    // busca numero do cliente 
-    let clientPhone = this.messageService.getClientNumberFromGroupName(group.name); 
+    // busca numero do cliente
+    let clientPhone = this.messageService.getClientNumberFromGroupName(
+      group.name,
+    );
     let client = { phoneNumber: clientPhone } as Client;
 
     // envaminha mensagem pro cliente

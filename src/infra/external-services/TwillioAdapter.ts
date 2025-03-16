@@ -1,6 +1,8 @@
-import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
+import { IWhatsappApiService } from '@application/interfaces/services/IWhatsappApiService';
 import { Group } from '@domain/entities/group.entity';
+import { Injectable } from '@nestjs/common';
 
+@Injectable()
 export class TwillioAdapter implements IWhatsappApiService {
   forwardMessageToClient(client: Client, message: ReceivedMessage): void {
     throw new Error('Method not implemented.');

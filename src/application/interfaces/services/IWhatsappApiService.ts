@@ -1,6 +1,7 @@
 import { Group } from "@domain/entities/group.entity";
 
-export default interface IWhatsappApiService {
+export const IWhatsappApiServiceToken: string = "IWhatsappApiService";
+export interface IWhatsappApiService {
     forwardMessageToClient(client: Client, message: ReceivedMessage): void;
     forwardMessageToGroup(group: Group, message: string): void;
     getGroupById(groupId: string): Group;

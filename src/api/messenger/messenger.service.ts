@@ -1,13 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateMessengerDto } from './dto/create-messenger.dto';
 import { UpdateMessengerDto } from './dto/update-messenger.dto';
-import IMessageHandlerFactory from '@application/interfaces/factories/IMessageHandlerFactory';
+import {
+  IMessageHandlerFactoryToken,
+  IMessageHandlerFactory,
+} from '@application/interfaces/factories/IMessageHandlerFactory';
 import { Sender } from '@domain/enums/sender.enum';
 
 @Injectable()
 export class MessengerService {
-
-  constructor(private readonly messageHandlerFactory: IMessageHandlerFactory) {}
+  constructor(
+    @Inject(IMessageHandlerFactoryToken)
+    private readonly messageHandlerFactory: IMessageHandlerFactory,
+  ) {}
 
   create(createMessengerDto: CreateMessengerDto) {
     return 'This action adds a new messenger';
@@ -29,9 +34,8 @@ export class MessengerService {
     return `This action removes a #${id} messenger`;
   }
 
-  async handleMessage(receivedMessage: ReceivedMessageDto){
-
-    if(!receivedMessage) return;
+  async handleMessage(receivedMessage: ReceivedMessageDto) {
+    if (!receivedMessage) return;
 
     let senderType = receivedMessage.groupId ? Sender.Attendee : Sender.Client;
 

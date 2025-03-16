@@ -1,14 +1,18 @@
-import IMessageService from '@application/interfaces/services/IMessageService';
-import IWhatsappApiService from '@application/interfaces/services/IWhatsappApiService';
-import MessagesRepository from '../../../infra/persistence/repositories/messages.repository';
-import MessageHandlerFactory from '@application/factories/MessageHandlerFactory';
+import { IMessageService } from '@application/interfaces/services/IMessageService';
+import { IWhatsappApiService, IWhatsappApiServiceToken } from '@application/interfaces/services/IWhatsappApiService';
 import { Group } from '@domain/entities/group.entity';
+import { IMessagesRepository, IMessagesRepositoryToken } from '@domain/interfaces/repositories/IMessagesRepository';
+import { Inject, Injectable } from '@nestjs/common';
 
+@Injectable()
 export default class MessageService implements IMessageService {
   private MAIN_NUMBER: string = process.env.BOT_PHONE;
 
   constructor(
-    private readonly messagesRepository: MessagesRepository,
+    @Inject(IMessagesRepositoryToken)
+    private readonly messagesRepository: IMessagesRepository,
+    
+    @Inject(IWhatsappApiServiceToken)
     private readonly whatsappApi: IWhatsappApiService,
   ) {}
 

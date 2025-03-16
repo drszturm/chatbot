@@ -1,9 +1,10 @@
 //instale REST Client 
 //https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 
-Get http://localhost:3000/messenger/twillio
+post http://localhost:3000/messenger/webhook
+content-type: application/json
+
 {
     "phone": "11958610424",
-    "text": "Olá ",
-//    "groupId": "string;"
+    "text": "Olá "
 }

@@ -1,6 +1,7 @@
 import { Group } from "@domain/entities/group.entity";
 
-export default interface IMessageService {
+export const IMessageServiceToken: string = "IMessageService";
+export interface IMessageService {
   findNextAttendance(): Attendance | PromiseLike<Attendance>;
   createGroup(
     message: ReceivedMessageDto,

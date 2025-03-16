@@ -1,4 +1,4 @@
-import { IMessagesRepository } from '@application/interfaces/repositories/IMessageRepository';
+import { IMessagesRepository } from '@domain/interfaces/repositories/IMessagesRepository';
 import { Group } from '@domain/entities/group.entity';
 import { Injectable, Scope } from '@nestjs/common';
 
