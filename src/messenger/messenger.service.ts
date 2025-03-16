@@ -1,9 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { CreateMessengerDto } from './dto/create-messenger.dto';
 import { UpdateMessengerDto } from './dto/update-messenger.dto';
+import { Twilio } from 'twilio';
 
 @Injectable()
 export class MessengerService {
+constructor(private readonly twilio:Twilio){}
   create(createMessengerDto: CreateMessengerDto) {
     return 'This action adds a new messenger';
   }

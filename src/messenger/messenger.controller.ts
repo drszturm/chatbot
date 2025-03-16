@@ -2,10 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MessengerService } from './messenger.service';
 import { CreateMessengerDto } from './dto/create-messenger.dto';
 import { UpdateMessengerDto } from './dto/update-messenger.dto';
-import  {Twilio } from 'twilio';
+
+
 @Controller('messenger')
 export class MessengerController {
-  constructor(private readonly messengerService: MessengerService,private twilio:Twilio){}
+  constructor(private readonly messengerService: MessengerService){}
 
   @Post("/twilio")
   create(@Body() createMessengerDto: CreateMessengerDto) {
