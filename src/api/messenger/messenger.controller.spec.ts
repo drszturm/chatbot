@@ -1,17 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
 import { MessengerController } from './messenger.controller';
 import { MessengerService } from './messenger.service';
 
 describe('MessengerController', () => {
   let controller: MessengerController;
-
+  const messageHandlerMock = {
+    execute: jest.fn(),
+  };
+  
+  const messageHandlerFactoryMock = {
+    create: jest.fn().mockReturnValue(messageHandlerMock),
+  };
+  
   beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      controllers: [MessengerController],
-      providers: [MessengerService],
-    }).compile();
-
-    controller = module.get<MessengerController>(MessengerController);
+    controller = new MessengerController(
+      new MessengerService(messageHandlerFactoryMock)
+    );
   });
 
   it('should be defined', () => {

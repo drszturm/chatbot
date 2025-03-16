@@ -6,6 +6,7 @@ import { AppModule } from './../src/api/app.module';
 describe('AppController (e2e)', () => {
   let app: INestApplication;
 
+  let basePath: '/messenger'
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
@@ -15,12 +16,14 @@ describe('AppController (e2e)', () => {
     await app.init();
   });
 
-  it('/ (GET)', () => {
+  it('/ Webhook', () => {
     return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+      .post(`${basePath}/webhook`)
+      .send({
+        phone: '',
+        text: '',
+        groupId: '',
+      })
+      .expect(400);
   });
-
-
 });
