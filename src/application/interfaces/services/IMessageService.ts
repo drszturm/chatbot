@@ -1,11 +1,12 @@
+import { Attendee } from "@domain/entities/attendee.entity";
 import { Group } from "@domain/entities/group.entity";
 
 export const IMessageServiceToken: string = "IMessageService";
 export interface IMessageService {
-  findNextAttendance(): Attendance | PromiseLike<Attendance>;
+  findNextAttendance(): Attendee | PromiseLike<Attendee>;
   createGroup(
     message: ReceivedMessageDto,
-    attendance: Attendance,
+    attendance: Attendee,
   ): Promise<Group>;
 
   getClientNumberFromGroupName(name): string;

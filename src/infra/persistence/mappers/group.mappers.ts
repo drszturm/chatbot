@@ -1,5 +1,5 @@
-import { Group } from "@domain/entities/group.entity";
-import { GroupEntity } from "../entities/grupo.entity";
+import { Group } from '@domain/entities/group.entity';
+import { GroupEntity } from '../entities/grupo.entity';
 
 export class GroupMapper {
   static toDomain(entity: GroupEntity): Group {
@@ -21,5 +21,4 @@ export class GroupMapper {
     entity.botPhone = domain.botPhone;
     return entity;
   }
-  
 }

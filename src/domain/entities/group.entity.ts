@@ -1,6 +1,6 @@
 export class Group {
   constructor(
-    public readonly id: number | undefined,
+    public readonly id: string | undefined,
     public readonly name: string,
     public readonly attendeePhone: string,
     public readonly clientPhone: string,

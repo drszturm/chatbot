@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { IWhatsappApiServiceToken, IWhatsappApiService } from '../interfaces/services/IWhatsappApiService';
 import {IMessageService, IMessageServiceToken} from '../interfaces/services/IMessageService';
-import { Sender } from 'domain/enums/sender.enum';
+import { Sender } from '@domain/enums/sender.enum';
 import { IMessageHandlerFactory } from '@application/interfaces/factories/IMessageHandlerFactory';
 import ClientMessageUseCase from '@application/useCases/ClientMessage/clientMessage.useCase';
 import AttendeeMessageUseCase from '@application/useCases/AttendeeMessage/attendeeMessage.useCase';
