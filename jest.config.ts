@@ -16,4 +16,11 @@ export default {
   moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
     prefix: '<rootDir>/',
   }),
+  coveragePathIgnorePatterns: [
+    "/node_modules/", // Ignora bibliotecas externas
+    "/dist/", // Ignora arquivos compilados
+    "src/infra/persistense/config/", 
+    "src/infra/persistense/entities/",
+    "src/common/mocks/", 
+  ],
 };
