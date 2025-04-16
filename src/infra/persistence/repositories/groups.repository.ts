@@ -23,7 +23,7 @@ export class GroupsRepository implements IGroupsRepository {
 
     this.repository.save(group);
   }
-  async getById(id: number): Promise<Group> {
+  async getById(id: string): Promise<Group> {
     const entity = await this.repository.findOneByOrFail({
         id
     });

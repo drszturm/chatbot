@@ -1,5 +1,6 @@
 import { IMessageService } from '@application/interfaces/services/IMessageService';
 import { IWhatsappApiService, IWhatsappApiServiceToken } from '@application/interfaces/services/IWhatsappApiService';
+import { Attendee } from '@domain/entities/attendee.entity';
 import { Group } from '@domain/entities/group.entity';
 import { IMessagesRepository, IMessagesRepositoryToken } from '@domain/interfaces/repositories/IMessagesRepository';
 import { Inject, Injectable } from '@nestjs/common';
@@ -16,7 +17,7 @@ export default class MessageService implements IMessageService {
     private readonly whatsappApi: IWhatsappApiService,
   ) {}
 
-  findNextAttendance(): Attendance | PromiseLike<Attendance> {
+  findNextAttendance(): Attendee | PromiseLike<Attendee> {
     // TODO: Implementar a seguinte regra
     // O atendente que tem menos grupos cadastrados é o próximo;
     throw new Error('Method not implemented.');
@@ -24,12 +25,12 @@ export default class MessageService implements IMessageService {
 
   async createGroup(
     message: ReceivedMessageDto,
-    attendance: Attendance,
+    attendee: Attendee,
   ): Promise<Group> {
-    let name = `${attendance.Id}#XXX - ${message.phone}`;
+    let name = `${attendee.id}#XXX - ${message.phone}`;
     let newGroup = {
       name,
-      attendeePhone: attendance.phone,
+      attendeePhone: attendee.attendeePhone,
       botPhone: this.MAIN_NUMBER,
       clientPhone: message.phone,
     } as Group;
