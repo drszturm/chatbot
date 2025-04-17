@@ -1,5 +1,5 @@
 import { IMessageService } from '@application/interfaces/services/IMessageService';
-import { IWhatsappApiService } from '@application/interfaces/services/IWhatsappApiService';
+import { IWhatsappAdapter } from '@application/interfaces/services/IWhatsappAdapter';
 import { IAttendeeMessageUseCase } from '@domain/interfaces/useCases/IAttendeeMessage.useCase';
 import { IMessagesRepository } from '@domain/interfaces/repositories/IMessagesRepository';
 import AttendeeMessageValidator from './attendeeMessage.validator';
@@ -7,7 +7,7 @@ import AttendeeMessageValidator from './attendeeMessage.validator';
 export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
   constructor(
     private readonly messagesRepository: IMessagesRepository,
-    private readonly whatsappApi: IWhatsappApiService,
+    private readonly whatsappApi: IWhatsappAdapter,
     private readonly messageService: IMessageService,
   ) {}
 
@@ -38,8 +38,8 @@ export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
 
       // envia mensagem para o cliente
       message.text = `*${attendee.name}*: ${message.text}`;
-      this.whatsappApi.forwardMessageToGroup(group, message.text);
-      this.whatsappApi.forwardMessageToClient(client, message);
+      this.whatsappApi.forwardMessageToGroup(group, message);
+      this.whatsappApi.forwardMessageToClient(client, group, message);
       return;
     }
 
@@ -51,6 +51,6 @@ export default class AttendeeMessageUseCase implements IAttendeeMessageUseCase {
 
     // envaminha mensagem pro cliente
     message.text = `*${attendee.name}*: ${message.text}`;
-    this.whatsappApi.forwardMessageToClient(client, message);
+    this.whatsappApi.forwardMessageToClient(client, group, message);
   }
 }

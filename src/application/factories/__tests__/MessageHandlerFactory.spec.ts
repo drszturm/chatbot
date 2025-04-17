@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import MessageHandlerFactory from '../MessageHandlerFactory';
 import { Sender } from '@domain/enums/sender.enum';
 import { IMessagesRepository, IMessagesRepositoryToken } from '@domain/interfaces/repositories/IMessagesRepository';
-import { IWhatsappApiService, IWhatsappApiServiceToken } from '../../interfaces/services/IWhatsappApiService';
+import { IWhatsappAdapter, IWhatsappAdapterToken } from '../../interfaces/services/IWhatsappAdapter';
 import { IMessageService, IMessageServiceToken } from '../../interfaces/services/IMessageService';
 import ClientMessageUseCase from '@application/useCases/ClientMessage/clientMessage.useCase';
 import AttendeeMessageUseCase from '@application/useCases/AttendeeMessage/attendeeMessage.useCase';
@@ -10,7 +10,7 @@ import AttendeeMessageUseCase from '@application/useCases/AttendeeMessage/attend
 describe('MessageHandlerFactory', () => {
     let factory: MessageHandlerFactory;
     let messagesRepositoryMock: IMessagesRepository;
-    let whatsappApiMock: IWhatsappApiService;
+    let whatsappApiMock: IWhatsappAdapter;
     let messageServiceMock: IMessageService;
 
     beforeEach(async () => {
@@ -22,7 +22,7 @@ describe('MessageHandlerFactory', () => {
                     useValue: {},
                 },
                 {
-                    provide: IWhatsappApiServiceToken,
+                    provide: IWhatsappAdapterToken,
                     useValue: {},
                 },
                 {
@@ -34,7 +34,7 @@ describe('MessageHandlerFactory', () => {
 
         factory = module.get<MessageHandlerFactory>(MessageHandlerFactory);
         messagesRepositoryMock = module.get<IMessagesRepository>(IMessagesRepositoryToken);
-        whatsappApiMock = module.get<IWhatsappApiService>(IWhatsappApiServiceToken);
+        whatsappApiMock = module.get<IWhatsappAdapter>(IWhatsappAdapterToken);
         messageServiceMock = module.get<IMessageService>(IMessageServiceToken);
     });
 

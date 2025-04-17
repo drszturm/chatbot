@@ -1,5 +1,5 @@
 import { IMessageService } from '@application/interfaces/services/IMessageService';
-import { IWhatsappApiService, IWhatsappApiServiceToken } from '@application/interfaces/services/IWhatsappApiService';
+import { IWhatsappAdapter, IWhatsappAdapterToken } from '@application/interfaces/services/IWhatsappAdapter';
 import { Attendee } from '@domain/entities/attendee.entity';
 import { Group } from '@domain/entities/group.entity';
 import { IMessagesRepository, IMessagesRepositoryToken } from '@domain/interfaces/repositories/IMessagesRepository';
@@ -13,8 +13,8 @@ export default class MessageService implements IMessageService {
     @Inject(IMessagesRepositoryToken)
     private readonly messagesRepository: IMessagesRepository,
     
-    @Inject(IWhatsappApiServiceToken)
-    private readonly whatsappApi: IWhatsappApiService,
+    @Inject(IWhatsappAdapterToken)
+    private readonly whatsappApi: IWhatsappAdapter,
   ) {}
 
   findNextAttendance(): Attendee | PromiseLike<Attendee> {
@@ -34,10 +34,12 @@ export default class MessageService implements IMessageService {
       botPhone: this.MAIN_NUMBER,
       clientPhone: message.phone,
     } as Group;
-    this.whatsappApi.createGroup(newGroup);
 
+    let id = await this.whatsappApi.createGroup(newGroup);
+
+    newGroup.id = id;
     // salva no banco
-    await this.messagesRepository.addGroup(newGroup);
+    this.messagesRepository.addGroup(newGroup);
     return newGroup;
   }
 

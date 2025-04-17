@@ -1,4 +1,4 @@
-import { IWhatsappApiService } from '@application/interfaces/services/IWhatsappApiService';
+import { IWhatsappAdapter } from '@application/interfaces/services/IWhatsappAdapter';
 import { IMessageService } from '@application/interfaces/services/IMessageService';
 import ClientMessageValidator from './clientMessage.validator';
 import { IClientMessageUseCase } from '@domain/interfaces/useCases/IClientMessage.useCase';
@@ -7,7 +7,7 @@ import { IMessagesRepository } from '@domain/interfaces/repositories/IMessagesRe
 export default class ClientMessageUseCase implements IClientMessageUseCase {
   constructor(
     private readonly messagesRepository: IMessagesRepository,
-    private readonly whatsappApi: IWhatsappApiService,
+    private readonly whatsappApi: IWhatsappAdapter,
     private readonly messageService: IMessageService,
   ) {}
 
@@ -22,7 +22,7 @@ export default class ClientMessageUseCase implements IClientMessageUseCase {
 
     if (group) {
       // se existe, encaminha a mensagem no grupo
-      this.whatsappApi.forwardMessageToGroup(group, message.text);
+      this.whatsappApi.forwardMessageToGroup(group, message);
       return;
     }
 
@@ -38,7 +38,7 @@ export default class ClientMessageUseCase implements IClientMessageUseCase {
       group = await this.messageService.createGroup(message, attendee);
 
       // Encaminha a mensgem no grupo
-      this.whatsappApi.forwardMessageToGroup(group, message.text);
+      this.whatsappApi.forwardMessageToGroup(group, message);
       return;
     }
 
@@ -49,6 +49,6 @@ export default class ClientMessageUseCase implements IClientMessageUseCase {
     group = await this.messageService.createGroup(message, attendee);
 
     // Encaminha a mensgem no grupo
-    this.whatsappApi.forwardMessageToGroup(group, message.text);
+    this.whatsappApi.forwardMessageToGroup(group, message);
   }
 }

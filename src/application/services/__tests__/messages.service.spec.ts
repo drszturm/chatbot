@@ -3,14 +3,14 @@ process.env.BOT_PHONE = "123456789";
 import { Test, TestingModule } from '@nestjs/testing';
 import MessageService from '../messages.service';
 import { IMessagesRepository, IMessagesRepositoryToken } from '@domain/interfaces/repositories/IMessagesRepository';
-import { IWhatsappApiService, IWhatsappApiServiceToken } from '@application/interfaces/services/IWhatsappApiService';
+import { IWhatsappAdapter, IWhatsappAdapterToken } from '@application/interfaces/services/IWhatsappAdapter';
 import { Attendee } from '@domain/entities/attendee.entity';
 import { Group } from '@domain/entities/group.entity';
 
 describe('MessageService', () => {
     let messageService: MessageService;
     let messagesRepositoryMock: jest.Mocked<IMessagesRepository>;
-    let whatsappApiMock: jest.Mocked<IWhatsappApiService>;
+    let whatsappApiMock: jest.Mocked<IWhatsappAdapter>;
 
     beforeEach(async () => {
         messagesRepositoryMock = {
@@ -19,13 +19,13 @@ describe('MessageService', () => {
 
         whatsappApiMock = {
             createGroup: jest.fn(),
-        } as unknown as jest.Mocked<IWhatsappApiService>;
+        } as unknown as jest.Mocked<IWhatsappAdapter>;
 
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 MessageService,
                 { provide: IMessagesRepositoryToken, useValue: messagesRepositoryMock },
-                { provide: IWhatsappApiServiceToken, useValue: whatsappApiMock },
+                { provide: IWhatsappAdapterToken, useValue: whatsappApiMock },
             ],
         }).compile();
 
