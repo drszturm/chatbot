@@ -13,7 +13,7 @@ describe('AttendeeMessageUseCase', () => {
       providers: [
         AttendeeMessageUseCase,
         { provide: 'IMessagesRepository', useValue: messagesRepositoryMock },
-        { provide: 'IWhatsappApiService', useValue: whatsappApiMock },
+        { provide: 'IWhatsappAdapter', useValue: whatsappApiMock },
         { provide: 'IMessageService', useValue: messageServiceMock },
       ],
     }).compile();
@@ -55,8 +55,8 @@ describe('AttendeeMessageUseCase', () => {
     await handler.execute(message as any);
 
     expect(messageServiceMock.createGroup).toHaveBeenCalledWith(message, attendee);
-    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, "*Attendee Name*: Hello");
-    expect(whatsappApiMock.forwardMessageToClient).toHaveBeenCalledWith(client, message);
+    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message);
+    expect(whatsappApiMock.forwardMessageToClient).toHaveBeenCalledWith(client, group, message);
   });
 
   it('should forward the message to the client if group exists', async () => {
@@ -72,7 +72,7 @@ describe('AttendeeMessageUseCase', () => {
 
     await handler.execute(message as any);
 
-    expect(whatsappApiMock.forwardMessageToClient).toHaveBeenCalledWith(client, {
+    expect(whatsappApiMock.forwardMessageToClient).toHaveBeenCalledWith(client, group, {
       ...message,
       text: "*Attendee Name*: Hello",
     });

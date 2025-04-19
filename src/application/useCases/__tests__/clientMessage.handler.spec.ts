@@ -14,7 +14,7 @@ describe('ClientMessageUseCase', () => {
       providers: [
         ClientMessageUseCase,
         { provide: 'IMessagesRepository', useValue: messagesRepositoryMock },
-        { provide: 'IWhatsappApiService', useValue: whatsappApiMock },
+        { provide: 'IWhatsappAdapter', useValue: whatsappApiMock },
         { provide: 'IMessageService', useValue: messageServiceMock },
       ],
     }).compile();
@@ -39,7 +39,7 @@ describe('ClientMessageUseCase', () => {
 
     await handler.execute(message);
 
-    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message.text);
+    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message);
   });
 
   it('should create a new group if no group exists but an attendee is found', async () => {
@@ -54,7 +54,7 @@ describe('ClientMessageUseCase', () => {
     await handler.execute(message);
 
     expect(messageServiceMock.createGroup).toHaveBeenCalledWith(message, attendee);
-    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message.text);
+    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message);
   });
 
   it('should assign a new attendee and create a group if no group or attendee exists', async () => {
@@ -71,6 +71,6 @@ describe('ClientMessageUseCase', () => {
 
     expect(messageServiceMock.findNextAttendance).toHaveBeenCalled();
     expect(messageServiceMock.createGroup).toHaveBeenCalledWith(message, attendee);
-    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message.text);
+    expect(whatsappApiMock.forwardMessageToGroup).toHaveBeenCalledWith(group, message);
   });
 });

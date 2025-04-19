@@ -7,8 +7,8 @@ import { GroupsRepository } from './persistence/repositories/groups.repository';
 import { databaseConfig } from './persistence/config/postgres.config';
 import MessagesRepository from './persistence/repositories/messages.repository';
 import { IMessagesRepositoryToken } from '@domain/interfaces/repositories/IMessagesRepository';
-import { TwillioAdapter } from './external-services/TwillioAdapter';
-import { IWhatsappApiServiceToken } from '@application/interfaces/services/IWhatsappApiService';
+import { WhatsappAdapter } from './external-services/WhatsappAdapter';
+import { IWhatsappAdapterToken } from '@application/interfaces/services/IWhatsappAdapter';
 
 @Module({
   imports: [
@@ -22,14 +22,14 @@ import { IWhatsappApiServiceToken } from '@application/interfaces/services/IWhat
       useClass: MessagesRepository,
     },
     {
-      provide: IWhatsappApiServiceToken,
-      useClass: TwillioAdapter,
+      provide: IWhatsappAdapterToken,
+      useClass: WhatsappAdapter,
     },
   ],
   exports: [
     GroupsRepository,
     IMessagesRepositoryToken,
-    IWhatsappApiServiceToken
+    IWhatsappAdapterToken
   ],
 })
 export class InfraModule {}

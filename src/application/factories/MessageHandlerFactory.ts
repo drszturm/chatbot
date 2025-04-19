@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IWhatsappApiServiceToken, IWhatsappApiService } from '../interfaces/services/IWhatsappApiService';
+import { IWhatsappAdapterToken, IWhatsappAdapter } from '../interfaces/services/IWhatsappAdapter';
 import {IMessageService, IMessageServiceToken} from '../interfaces/services/IMessageService';
 import { Sender } from '@domain/enums/sender.enum';
 import { IMessageHandlerFactory } from '@application/interfaces/factories/IMessageHandlerFactory';
@@ -14,8 +14,8 @@ export default class MessageHandlerFactory implements IMessageHandlerFactory {
     @Inject(IMessagesRepositoryToken)
     private readonly messagesRepository: IMessagesRepository,
     
-    @Inject(IWhatsappApiServiceToken)
-    private readonly whatsappApi: IWhatsappApiService,
+    @Inject(IWhatsappAdapterToken)
+    private readonly whatsappApi: IWhatsappAdapter,
     
     @Inject(IMessageServiceToken)
     private readonly messageService: IMessageService,

@@ -1,10 +1,10 @@
 export class Group {
   constructor(
-    public readonly id: string | undefined,
-    public readonly name: string,
-    public readonly attendeePhone: string,
-    public readonly clientPhone: string,
-    public readonly botPhone: string,
+    public id: string | undefined,
+    public name: string,
+    public attendeePhone: string,
+    public clientPhone: string,
+    public botPhone: string,
   ) {}
 
   // Exemplo de método de domínio
