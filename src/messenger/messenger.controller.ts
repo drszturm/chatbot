@@ -1,9 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { Twilio } from 'twilio';
 
-@Injectable()
-export class MessengerService {
-constructor(private readonly twilio:Twilio){}
+
+export class MessengerController{
+constructor(){}
   create(createMessengerDto: any) {
     return 'This action adds a new messenger';
   }

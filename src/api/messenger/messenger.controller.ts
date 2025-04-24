@@ -11,18 +11,12 @@ import { MessengerService } from './messenger.service';
 import { CreateMessengerDto } from './dto/create-messenger.dto';
 import { UpdateMessengerDto } from './dto/update-messenger.dto';
 
-<<<<<<< HEAD:src/messenger/messenger.controller.ts
 
-@Controller('messenger')
-export class MessengerController {
-  constructor(private readonly messengerService: MessengerService){}
-=======
 @Controller('messenger')
 export class MessengerController {
   constructor(
     private readonly messengerService: MessengerService
   ) {}
->>>>>>> 56652ab2af2228b8e61a7b261270ac1fa698346a:src/api/messenger/messenger.controller.ts
 
   @Post('/webhook')
   receiveMessage(@Body() message: ReceivedMessageDto) {

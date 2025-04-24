@@ -20,6 +20,7 @@ export default class MessageService implements IMessageService {
   findNextAttendance(): Attendee | PromiseLike<Attendee> {
     // TODO: Implementar a seguinte regra
     // O atendente que tem menos grupos cadastrados é o próximo;
+
     throw new Error('Method not implemented.');
   }
 
@@ -27,12 +28,12 @@ export default class MessageService implements IMessageService {
     message: ReceivedMessageDto,
     attendee: Attendee,
   ): Promise<Group> {
-    let name = `${attendee.id}#XXX - ${message.phone}`;
+    let name = `${attendee.id}#XXX - ${message.key.remoteJid}`;
     let newGroup = {
       name,
       attendeePhone: attendee.attendeePhone,
       botPhone: this.MAIN_NUMBER,
-      clientPhone: message.phone,
+      clientPhone: message.key.remoteJid,
     } as Group;
 
     let id = await this.whatsappApi.createGroup(newGroup);

@@ -4,9 +4,9 @@ export const WhatsappApiServiceToken = 'WhatsappApiServiceToken';
 
 @Injectable()
 export class WhatsappApiService {
-  private url = process.env.Z_API_URL;
-  private token = process.env.Z_API_TOKEN;
-  private instance = process.env.Z_API_INSTANCE;
+  private url = process.env.EVOLUTION_API_URL;
+  private token = process.env.EVOLUTION_API_TOKEN;
+  private instance = process.env.EVOLUTION_API_INSTANCE;
   private BOT_PHONE = process.env.BOT_PHONE;
   private counter = 0;
 
