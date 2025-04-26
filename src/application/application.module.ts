@@ -13,10 +13,12 @@ import MessageService from './services/messages.service';
     InfraModule
   ],
   providers: [
+    MessageHandlerFactory,
     {
       provide: IMessageHandlerFactoryToken,
       useClass: MessageHandlerFactory,
     },
+    MessageService,
     {
       provide: IMessageServiceToken,
       useClass: MessageService,
@@ -24,7 +26,9 @@ import MessageService from './services/messages.service';
   ],
   exports: [
     IMessageHandlerFactoryToken,
-    IMessageServiceToken
+    MessageHandlerFactory,
+    IMessageServiceToken,
+    MessageService
   ],
 })
 export class ApplicationModule {}

@@ -1,15 +1,23 @@
-/* istanbul ignore file */
 import { Module } from '@nestjs/common';
+import { CommonModule } from '@common/common.module';
+import { InfraModule } from '@infra/infra.module';
+import { ApplicationModule } from '@application/application.module';
 import { MessengerService } from './messenger.service';
 import { MessengerController } from './messenger.controller';
-import MessagesRepository from '../../infra/persistence/repositories/messages.repository';
-import { ApplicationModule } from '@application/application.module';
 
 @Module({
-  imports: [ApplicationModule],
-  controllers: [MessengerController],
+  imports: [
+    CommonModule,
+    InfraModule,
+    // importa o ApplicationModule para trazer o IMessageHandlerFactoryToken
+    ApplicationModule,
+  ],
+  controllers: [
+    MessengerController,
+  ],
   providers: [
-    MessengerService, 
-    MessagesRepository],
+    // aqui só o próprio Service — o factory vem via ApplicationModule
+    MessengerService,
+  ],
 })
 export class MessengerModule {}

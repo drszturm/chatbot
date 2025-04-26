@@ -10,16 +10,14 @@ import { Attendee } from '@domain/entities/attendee.entity';
 import { GroupMapper } from '../mappers/Group.mappers';
 
 // TODO: Implementar repository
-@Injectable({
-  scope: Scope.TRANSIENT,
-})
+@Injectable()
 export default class MessagesRepository implements IMessagesRepository {
   constructor(
-    @InjectRepository(GroupEntity)
-    private readonly groupRepository: Repository<GroupEntity>,
-
     @InjectRepository(AttendeeEntity)
     private readonly attendeeRepository: Repository<AttendeeEntity>,
+
+    @InjectRepository(GroupEntity)
+    private readonly groupRepository: Repository<GroupEntity>,
   ) {}
 
   async findAtteendeeByPhone(phone: string): Promise<Attendee> {
